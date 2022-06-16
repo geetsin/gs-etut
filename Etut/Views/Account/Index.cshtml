@@ -1,0 +1,17 @@
+﻿@using Etut.Models.DataModels
+@using Etut.Utilities
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
+@{
+    ViewData["Title"] = "User Page";
+}
+
+<a class="btn btn-dark mt-5">Profile</a>
+<a class="btn btn-dark mt-5">Settings</a>
+
+
+
+

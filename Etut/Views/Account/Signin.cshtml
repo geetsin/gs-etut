@@ -1,0 +1,56 @@
+﻿@model Etut.Models.ViewModels.SigninVM
+@{
+    ViewData["Title"] = "Sign In ";
+}
+
+
+<div class="container">
+    <div class="row ">
+
+        <div class="col-lg mx-auto">
+            <div class="form-signin mt-5 w-75 text-center">
+                @*<img class="mb-4" src="~/images/etut_logo.png" alt="" width="" height="60">*@
+                <h1 class="display-4 mb-3 fw-normal text-dark">Sign in</h1>
+                <p class="text-muted mb-3 fw-normal">Use your registered email</p>
+                <form class="" id="signupForm" asp-action="Signin" asp-controller="Account">
+
+                    <div class="form-group mb-3">
+                        <input asp-for="Email" type="email" class="form-control" id="floatingInput" placeholder="Email">
+                    </div>
+                    <div class="form-group mb-3">
+                        <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="checkbox mb-3">
+                                <label>
+                                    <input asp-for="RememberMe" type="checkbox"> Remember me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a href="#">Forgot Password?</a>
+                        </div>
+                    </div>
+
+                    <div asp-validation-summary="ModelOnly" id="aspValidation" class="alert alert-danger"></div>
+
+                    <button class="w-50 btn btn-lg btn-success" type="submit">Sign in</button>
+                    <p class="mt-2">Do not have an account? <a asp-controller="Account" asp-action="Signup">Sign up </a></p>
+                </form>
+            </div>
+        </div>
+        <div class="col-md mt-5">
+            <img id="signInPic" class="w-75" src="~/images/sign_in.svg" alt="e-tut">
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}

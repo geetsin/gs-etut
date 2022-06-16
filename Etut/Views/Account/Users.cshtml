@@ -1,0 +1,71 @@
+﻿@using Etut.Models.DataModels
+@using Etut.Utilities
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
+@{
+    ViewData["Title"] = "Users";
+}
+@if (User.IsInRole(Helper.Admin))
+{
+    <nav class="navbar navbar-expand-lg">
+        <ul class="nav navbar-nav">
+            <li><a class="btn btn-dark mb-5" asp-action="CreateAdmin" asp-controller="Account"><i class="bi bi-plus-circle-fill"></i>  Create Admin</a></li>
+        </ul>
+    </nav>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Approval</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var studentUser in ViewBag.StudentList)
+            {
+                <tr data-userid="@studentUser.Id">
+                    <td>@studentUser.FirstName @studentUser.LastName</td>
+                    <td>@studentUser.Email</td>
+
+                    @if (studentUser.IsAdminApproved)
+                    {
+
+                        <td><i class="bi bi-person-check-fill text-success"></i></td>
+                    }
+                    else
+                    {
+                        <td><i class="bi bi-person-x-fill text-danger"></i></td>
+                    }
+                    <td>
+                        <button class="btn btn-secondary" id="@studentUser.Id" onclick="showViewEditUsersModal(this)"><i class="bi bi-eye"></i></button>
+                    </td>
+
+                </tr>
+            }
+            @foreach (var adminUser in ViewBag.AdminList)
+            {
+                <tr>
+                    <td>@adminUser.FirstName @adminUser.LastName <span class="badge badge-pill badge-info text-info">admin</span>   </td>
+                    <td>@adminUser.Email</td>
+                    <td><i class="bi bi-person-check-fill text-success"></i></td>
+
+                    <td>
+                        <button class="btn btn-secondary" id="@adminUser.Id" onclick="showViewEditUsersModal(this)"><i class="bi bi-eye"></i></button>
+                    </td>
+
+
+                </tr>
+            }
+
+
+
+        </tbody>
+    </table>
+
+}
+<partial name="_ViewEditUsers" />

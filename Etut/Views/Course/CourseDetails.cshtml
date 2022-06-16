@@ -1,0 +1,43 @@
+﻿@model Etut.Models.ViewModels.CourseVM
+
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<p class="mt-5 display-4">@Model.Name</p>
+<p class="h4">@Model.Description</p>
+<p></p>
+<hr>
+
+
+<div class="container">
+    <!-- Content here -->
+    <div class="row mt-5">
+        <div class="col-md-8">
+
+            <em><p class="h3 mb-3" id="video-area-chapter-number">Chapter 1 </p></em>
+            <p class="h4 mb-3" id="video-area-chapter-name"> @Model.VideoList[0].Name</p>
+            <div class="video-container mb-3" id="video-container">
+                <iframe id="video-area-url" src="@Model.VideoList[0].VideoUrl" allowfullscreen></iframe>
+            </div>
+            <p class="mb-3" id="video-area-description">@Model.VideoList[0].Description</p>
+
+        </div>
+        <div class="col-md-4">
+            <h3><em>Chapters </em></h3><hr>
+            @for (var i = 0; i < @Model.VideoCount; i++)
+            {
+                <div class="card mb-1">
+                    <div class="card-body" onclick="showMeThisChapter(this)">
+                        <p id="video-side-chapter">Chapter @(i+1)</p>
+                        <p class="card-title h4 link-primary pointer-element" id="video-side-name" data-url=@Model.VideoList[i].VideoUrl data-description=@Model.VideoList[i].Description>
+                            @Model.VideoList[i].Name
+                        </p>
+                        <a id="video-side-description" hidden>@Model.VideoList[i].Description</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

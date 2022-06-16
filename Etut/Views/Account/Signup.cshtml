@@ -1,0 +1,52 @@
+﻿@model Etut.Models.ViewModels.SignupVM
+
+@{
+    ViewData["Title"] = "Sign Up ";
+}
+
+<div class="container">
+    <div class="row ">
+        
+        <div class="col-lg mx-auto">
+                <div class="form-signin mt-5 w-75 text-center">
+                    @*<img class="mb-4" src="~/images/etut_logo.png" alt="" width="" height="60">*@
+                    <h1 class="display-4 mb-3 fw-normal text-dark">Sign up</h1>
+                    <p class="text-muted mb-3 fw-normal">Create an account with your email</p>
+                    <form class="" id="signupForm" method="post" asp-action="Signup" asp-controller="Account">
+
+                        <div class="form-group mb-3">
+                            <input type="text" asp-for="FirstName" class="form-control" id="inputFirstName" placeholder="First name">
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="text" asp-for="LastName" class="form-control" id="inputLastName" placeholder="Last name">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <input type="email" asp-for="Email" class="form-control" id="inputEmail" placeholder="Email">
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="password" asp-for="Password" class="form-control" id="inputPassword" placeholder="Password">
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="password" asp-for="ConfirmPassword" class="form-control" id="inputConfirmPassword" placeholder="Confirm password">
+                        </div>
+
+
+                        <div asp-validation-summary="All" class="text-danger mt-2"></div>
+
+                        <button class="w-50 btn btn-lg btn-primary" type="submit">Sign up</button>
+                        <p class="mt-2">Already have an account? <a asp-controller="Account" asp-action="Signin">Sign in </a></p>
+                    </form>
+                </div>
+        </div>
+        <div class="col-md mt-5">
+            <img class="w-75 mt-5" src="~/images/sign_up.svg" alt="e-tut">
+        </div>  
+
+    </div>
+</div>
+
+
+@section Scripts{
+<partial name="_ValidationScriptsPartial" />
+}

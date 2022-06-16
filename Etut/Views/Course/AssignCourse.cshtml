@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Assign Course";
+}
+
+<label class="h5 mt-5" for="my-courses-list">Select a course:   </label>
+<select class="h5 mx-1" onchange="getStudentsList()" id="my-courses-select" asp-items="@(new SelectList(ViewBag.myCoursesList, "Id", "Name"))" class="form-control form-select-sm">
+    <option disabled selected>- Select Course -</option>
+</select>
+
+
+<table class="table table-bordered mt-5">
+    <thead>
+        <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">Assign</th>
+        </tr>
+    </thead>
+    <tbody id="student-table">
+        @foreach (var student in ViewBag.allStudentsList)
+        {
+            <tr>
+                <td>@student.FirstName @student.LastName</td>
+                <td>
+                    <div class="input-group-text">
+                        <input id="user-status-radio" type="checkbox" aria-label="Checkbox" data-id="@student.Id" data-course-assigned="false">
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button type="button" class="btn btn-danger" onclick="addUsersToCourse()">Submit</button>

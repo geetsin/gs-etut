@@ -1,0 +1,40 @@
+﻿@using Etut.Models.DataModels
+@using Etut.Utilities
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> signInManager
+@inject UserManager<ApplicationUser> userManager
+
+@if (signInManager.IsSignedIn(User))
+{
+    <form id="signoutForm" asp-action="Signout" asp-controller="Account">
+        <ul class="nav navbar">
+            <a asp-area="" asp-controller="Course" asp-action="Index" class="btn btn-danger mx-3">Courses</a>
+
+            <div class="dropdown">
+                <button asp-controller="Account" asp-action="Index" class="btn btn-secondary btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person-circle"></i> @((await userManager.GetUserAsync(User)).FirstName) @((await userManager.GetUserAsync(User)).LastName)
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" asp-controller="Account" asp-action="UserProfile">Profile</a></li>
+                    @if (User.IsInRole(Helper.Admin))
+                    {
+                        <li><a class="dropdown-item" asp-controller="Account" asp-action="Users">Users</a></li>
+                    }
+                    
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a href="javascript:document.getElementById('signoutForm').submit()" class="dropdown-item text-danger">Logout</a></li>
+                </ul>
+            </div>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="navbar-nav ms-auto flex-nowrap">
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Account" asp-action="Signin" class="btn btn-success">Sign in</a>
+        </li>
+
+    </ul>
+}
