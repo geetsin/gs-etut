@@ -27,9 +27,10 @@ try
     builder.Host.UseNLog();
 
     // Add Application DB Context
+    var dbConnectionString = builder.Configuration["ConnectionStrings:DevelopmentConnection"];
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+        options.UseSqlServer(dbConnectionString);
     });
     // Add cusotm Identity 
     builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
