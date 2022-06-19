@@ -8,6 +8,8 @@ using NLog.Web;
 using Microsoft.AspNetCore.Builder;
 using Etut.Services;
 using Etut.Models.DataModels;
+using Azure.Identity;
+using Etut.Utilities;
 
 var logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 logger.Debug("init main");
@@ -26,8 +28,23 @@ try
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
     builder.Host.UseNLog();
 
-    // Add Application DB Context
+
+    // Get the database connection string for dev
     var dbConnectionString = builder.Configuration["ConnectionStrings:DevelopmentConnection"];
+
+    // Connecting to Azure Key Vault in Production
+    if (builder.Environment.IsProduction())
+    {
+        builder.Configuration.AddAzureKeyVault(
+            new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+            new DefaultAzureCredential());
+        dbConnectionString = builder.Configuration["gs-etut-connection-string"];
+    }
+
+    // Initialize the Configuration Helper to get configuration in static classes. Instead of DI
+    ConfigurationHelper.Initialize(builder.Configuration);
+
+    // Add Application DB Context 
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
         options.UseSqlServer(dbConnectionString);
@@ -45,6 +62,13 @@ try
 
 
     var app = builder.Build();
+
+    // Seed Data
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        SeedData.Initialize(services);
+    }
 
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
