@@ -149,7 +149,7 @@ namespace Etut.Controllers
                 {
                     await _userManager.AddToRoleAsync(user, Helper.Admin);
                     _logger.LogInformation("New Admin account created Successfully");
-                    return RedirectToAction("Signin", "Account");
+                    return RedirectToAction("Users", "Account");
                 }
                 foreach (var error in result.Errors)
                 {
