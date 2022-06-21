@@ -11,6 +11,6 @@ namespace Etut.Services
         public UserVM? GetUserDetailsById(string userId);
         public Task<int> ApproveUser(string userId);
         public Task<int> RejectUser(string userId);
-        public Task<int> updateUserData(UserVM model);
+        public Task<int> UpdateUserData(UserVM model);
     }
 }

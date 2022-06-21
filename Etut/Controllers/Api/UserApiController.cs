@@ -92,7 +92,7 @@ namespace Etut.Controllers.Api
             CommonResponse<int> commonResponse = new CommonResponse<int>();
             try
             {
-                commonResponse.status = await _userService.updateUserData(pData);
+                commonResponse.status = await _userService.UpdateUserData(pData);
                 commonResponse.message = commonResponse.status == 1 ? Helper.userUpdateSuccess : Helper.userUpdateFailure;
 
             }

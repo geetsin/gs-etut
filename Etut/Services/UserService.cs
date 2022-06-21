@@ -110,7 +110,7 @@ namespace Etut.Services
             }
         }
 
-        public async Task<int> updateUserData(UserVM model)
+        public async Task<int> UpdateUserData(UserVM model)
         {
             if(model != null)
             {
