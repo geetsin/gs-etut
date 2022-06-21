@@ -20,17 +20,21 @@ try
 
     // Add services to the container.
     builder.Services.AddControllersWithViews();
-    // Add Run-time compilation
-    builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+    
 
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
     builder.Host.UseNLog();
+    if (builder.Environment.IsDevelopment())
+    {
+        // Add Run-time compilation
+        builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+    }
 
-
-    // Get the database connection string for dev
-    var dbConnectionString = builder.Configuration["ConnectionStrings:DevelopmentConnection"];
+        // Get the database connection string for dev
+        var dbConnectionString = builder.Configuration["ConnectionStrings:DevelopmentConnection"];
 
     // Connecting to Azure Key Vault in Production
     if (builder.Environment.IsProduction())
