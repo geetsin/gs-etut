@@ -2,25 +2,36 @@
 using Etut.Models.DataModels;
 using Etut.Models.ViewModels;
 using Etut.Utilities;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Etut.Services
 {
     public class UserService : IUserService
     {
         public readonly ApplicationDbContext _db;
+        private readonly IMemoryCache _memoryCache;
 
-        public UserService(ApplicationDbContext db)
+        public UserService(ApplicationDbContext db, IMemoryCache memoryCache)
         {
             _db = db;
+            _memoryCache = memoryCache;
         }
 
 
         public List<UserVM> GetAdminList()
         {
-            var adminList = (from users in _db.Users
+            var adminList = new List<UserVM>();
+            if(_memoryCache.TryGetValue(Helper.allAdminsCacheKey, out List<UserVM> allAdmins))
+            {
+                adminList = allAdmins;
+            }
+            else
+            {
+                adminList = (from users in _db.Users
                              join userRoles in _db.UserRoles on users.Id equals userRoles.UserId
                              join roles in _db.Roles.Where(x => x.Name == Helper.Admin) on userRoles.RoleId equals roles.Id
-                             select new UserVM {
+                             select new UserVM
+                             {
                                  Id = users.Id,
                                  FirstName = users.FirstName,
                                  LastName = users.LastName,
@@ -28,12 +39,21 @@ namespace Etut.Services
                                  IsAdminApproved = users.IsAdminApproved,
                              }
                              ).ToList();
+                _memoryCache.Set(Helper.allAdminsCacheKey, adminList, TimeSpan.FromMinutes(1));
+            }
+            
             return adminList;
         }
 
         public List<UserVM> GetStudentList()
         {
-            var studentList = (from users in _db.Users
+            var studentList = new List<UserVM>();
+            if (_memoryCache.TryGetValue(Helper.allStudentsCacheKey, out List<UserVM> allStudents))
+            {
+                studentList = allStudents;
+            } else
+            {
+                studentList = (from users in _db.Users
                                join userRoles in _db.UserRoles on users.Id equals userRoles.UserId
                                join roles in _db.Roles.Where(x => x.Name == Helper.Student) on userRoles.RoleId equals roles.Id
                                select new UserVM
@@ -45,6 +65,9 @@ namespace Etut.Services
                                    IsAdminApproved = users.IsAdminApproved,
                                }
                                ).ToList();
+                _memoryCache.Set(Helper.allStudentsCacheKey, studentList, TimeSpan.FromMinutes(1));
+
+            }
             return studentList;
         }
         public List<UserVM> GetStudentListByCourseId(string courseId)

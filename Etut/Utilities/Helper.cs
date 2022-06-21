@@ -2,12 +2,15 @@
 {
     public static class Helper
     {
+        // User types
         public static string Admin = "Admin";
         public static string Student = "Student";
 
+        // Status codes
         public static int failureCode = 0;
         public static int successCode = 1;
 
+        // Messages
         public static string genericApiCallSuccessMsg = "API Call Success!";
         public static string genericApiCallFailureMsg = "API Call Failure!";
 
@@ -27,6 +30,11 @@
 
         public static string userCourseSuccess = "Users are assigned with the course";
         public static string userCourseFailure = "Could not assign course to users";
+
+        // Caching codes
+        public static string allStudentsCacheKey = "allStudents";
+        public static string allAdminsCacheKey = "allAdmins";
+
 
         public static string GetStringGUID()
         {

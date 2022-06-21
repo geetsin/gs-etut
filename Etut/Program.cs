@@ -21,12 +21,15 @@ try
     // Add services to the container.
     builder.Services.AddControllersWithViews();
 
-    
+    //Add In-Memory caching
+    builder.Services.AddMemoryCache();
 
     // NLog: Setup NLog for Dependency injection
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
     builder.Host.UseNLog();
+
+
     if (builder.Environment.IsDevelopment())
     {
         // Add Run-time compilation
