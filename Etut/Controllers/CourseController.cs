@@ -30,8 +30,14 @@ namespace Etut.Controllers
             _courseService = courseService;
             _userService = userService;
         }
+
         public IActionResult Index()
         {
+            if (!_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User not signed in. Redirecting to signin page from course/index");
+                return RedirectToAction("Signin", "Account");
+            }
             List<CourseVM> userCourseList = _courseService.GetCoursesByUserID(_userManager.GetUserId(User));
             // ***TODO*** Check if the user is approved and show view accordingly
             return View(userCourseList);
@@ -43,12 +49,12 @@ namespace Etut.Controllers
         {
             if (!_signInManager.IsSignedIn(HttpContext.User))
             {
-                _logger.LogInformation("User not signed in. Redirecting to signin page");
+                _logger.LogInformation("User not signed in. Redirecting to signin page from course/create");
                 return RedirectToAction("Signin", "Account");
             }
             if (!User.IsInRole(Helper.Admin))
             {
-                _logger.LogInformation("User is not admin. Redirecting to signin page");
+                _logger.LogInformation("User is not admin. Redirecting to signin page from course/create");
                 return RedirectToAction("Index", "Course");
             }
             return View();
@@ -57,6 +63,11 @@ namespace Etut.Controllers
         [Route("course/details")]
         public IActionResult CourseDetails(string c)
         {
+            if (!_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User not signed in. Redirecting to signin page from course/details");
+                return RedirectToAction("Signin", "Account");
+            }
             CourseVM tempCourse = _courseService.GetCourseByCourseName(c);
 
             return View(tempCourse);
@@ -65,9 +76,14 @@ namespace Etut.Controllers
         [Route("course/assign")]
         public IActionResult AssignCourse()
         {
+            if (!_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User not signed in. Redirecting to signin page from course/assign");
+                return RedirectToAction("Signin", "Account");
+            }
             if (!User.IsInRole(Helper.Admin))
             {
-                _logger.LogInformation("User is not Admin. Redirecting to course Index");
+                _logger.LogInformation("User is not Admin. Redirecting to course Index from course/assign");
                 return RedirectToAction("Index", "Course");
             }
 

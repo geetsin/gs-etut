@@ -29,6 +29,11 @@ namespace Etut.Controllers
         }
         public IActionResult Index()
         {
+            if (!_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User not signed in. Redirecting to signin page from account/index");
+                return RedirectToAction("Signin", "Account");
+            }
             return View();
         }
         public IActionResult Signin()
@@ -162,6 +167,11 @@ namespace Etut.Controllers
         [Route("account/users")]
         public IActionResult Users()
         {
+            if (!_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User not signed in. Redirecting to signin page from account/users");
+                return RedirectToAction("Signin", "Account");
+            }
             ViewBag.AdminList = _userService.GetAdminList();
             ViewBag.StudentList = _userService.GetStudentList();
             return View();
@@ -170,6 +180,11 @@ namespace Etut.Controllers
         [Route("account/user-profile")]
         public IActionResult UserProfile()
         {
+            if (!_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User not signed in. Redirecting to signin page from account/user-profile");
+                return RedirectToAction("Signin", "Account");
+            }
             ViewBag.CurrenstUserDetails = _userService.GetUserDetailsById(_userManager.GetUserId(User)); // Get currently signed in user's details
             return View();
         }
@@ -178,6 +193,11 @@ namespace Etut.Controllers
         [HttpGet]
         public IActionResult ChangePassword()
         {
+            if (!_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User not signed in. Redirecting to signin page from account/change-password");
+                return RedirectToAction("Signin", "Account");
+            }
             return View();
         }
 
