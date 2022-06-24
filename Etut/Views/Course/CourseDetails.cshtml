@@ -5,7 +5,7 @@
 }
 
 <p class="mt-5 display-4">@Model.Name</p>
-<p class="h4">@Model.Description</p>
+<p class="h5">@Model.Description</p>
 <p></p>
 <hr>
 
@@ -30,7 +30,7 @@
                 <div class="card mb-1">
                     <div class="card-body" onclick="showMeThisChapter(this)">
                         <p id="video-side-chapter">Chapter @(i+1)</p>
-                        <p class="card-title h4 link-primary pointer-element" id="video-side-name" data-url=@Model.VideoList[i].VideoUrl data-description=@Model.VideoList[i].Description>
+                        <p class="card-title h5 link-primary pointer-element" id="video-side-name" data-url=@Model.VideoList[i].VideoUrl data-description=@Model.VideoList[i].Description>
                             @Model.VideoList[i].Name
                         </p>
                         <a id="video-side-description" hidden>@Model.VideoList[i].Description</a>
