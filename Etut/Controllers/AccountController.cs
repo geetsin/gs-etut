@@ -38,6 +38,11 @@ namespace Etut.Controllers
         }
         public IActionResult Signin()
         {
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User signed in. Redirecting to course/index");
+                return RedirectToAction("Index", "Course");
+            }
             return View();
         }
 
@@ -65,6 +70,11 @@ namespace Etut.Controllers
                 _logger.LogInformation("New Roles created for the first time");
                 _roleManager.CreateAsync(new IdentityRole(Helper.Admin));
                 _roleManager.CreateAsync(new IdentityRole(Helper.Student));
+            }
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                _logger.LogInformation("User signed in. Redirecting to course/index");
+                return RedirectToAction("Index", "Course");
             }
             return View();
         }
@@ -209,6 +219,11 @@ namespace Etut.Controllers
             if(ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(_userManager.GetUserId(User));
+                // Restricting password change for demo accounts
+                if(user.Email == Helper.demoAdminEmail || user.Email == Helper.demoStudentEmail)
+                {
+                    return RedirectToAction("UserProfile", "Account");
+                }
                 var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
                 if(result.Succeeded)
                 {
