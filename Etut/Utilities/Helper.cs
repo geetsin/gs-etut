@@ -35,6 +35,10 @@
         public static string allStudentsCacheKey = "allStudents";
         public static string allAdminsCacheKey = "allAdmins";
 
+        // Demo account emails
+        public static string demoAdminEmail = "demo.admin@example.com";
+        public static string demoStudentEmail = "demo.student@example.com";
+
 
         public static string GetStringGUID()
         {
