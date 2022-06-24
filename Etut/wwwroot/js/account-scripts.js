@@ -136,3 +136,7 @@ function disableModalEdit() {
     $("#btnSaveChanges").hide(); // Hide Save Changes button
     window.location.reload(); // Reload the page to get the latest info
 }
+
+function showDemoUserCredentials() {
+    $('#demo_credentials').removeAttr('hidden');
+}

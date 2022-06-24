@@ -35,9 +35,19 @@
 
                     <div asp-validation-summary="ModelOnly" id="aspValidation" class="alert alert-danger"></div>
 
-                    <button class="w-50 btn btn-lg btn-success" type="submit">Sign in</button>
+                    <button class="w-50 btn btn-lg btn-success" type="submit">Sign in</button>  
                     <p class="mt-2">Do not have an account? <a asp-controller="Account" asp-action="Signup">Sign up </a></p>
                 </form>
+
+                <a class="text-muted mb-3 pointer-element" onclick="showDemoUserCredentials()">Show demo user credentials</a>
+                <div id="demo_credentials" class="mt-3" hidden >
+                    
+                    <p>Admin username: demo.admin@example.com</p>
+                    <p>Admin Password: Zxcvbnm123#</p><hr />
+                    <p>Student username: demo.student@example.com</p>
+                    <p>Student Password: Zxcvbnm123#</p>
+                </div>
+
             </div>
         </div>
         <div class="col-md mt-5">
