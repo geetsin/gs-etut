@@ -2,6 +2,9 @@
  
  DEMO: https://gs-etut.azurewebsites.net/
  
+ Demo user accounts:
+ * Admin username: demo.admin@example.com, password: Zxcvbnm123#
+ * Student username: demo.student@example.com, password: Zxcvbnm123#
  
 e-tut is an online tutoring app where teachers can add video courses for their students. e-tut uses MySQL as database.
 
