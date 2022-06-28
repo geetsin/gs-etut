@@ -13,10 +13,6 @@ html {
     min-height: 100%;
 }
 
-body {
-    margin-bottom: 60px;
-}
-
 .video-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -35,12 +31,4 @@ body {
 
 .pointer-element {
     cursor: pointer;
-}
-
-.description-text {
-/*    display: block;
-    width: 100px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;*/
 }
